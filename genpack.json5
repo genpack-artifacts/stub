@@ -1,6 +1,9 @@
 {
+    "name": "stub",
+    "compression":"xz",
     "packages": [
         "genpack/paravirt",
+        "sys-kernel/gentoo-kernel", // build from source using savedconfig
         "sys-apps/kexec-tools",
         "dev-util/debootstrap",
         "sys-fs/cryptsetup",
@@ -9,6 +12,7 @@
     ],
     "use": {
         "app-arch/rpm": "caps",
-        "sys-kernel/dracut-genpack": "transient"
+        "sys-kernel/dracut-genpack": "transient",
+        "sys-kernel/gentoo-kernel": "savedconfig",
     }
 }
