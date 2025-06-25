@@ -1,0 +1,14 @@
+{
+    "packages": [
+        "genpack/paravirt",
+        "sys-apps/kexec-tools",
+        "dev-util/debootstrap",
+        "sys-fs/cryptsetup",
+        "dev-util/rpmbootstrap",
+        "sys-devel/binutils"
+    ],
+    "use": {
+        "app-arch/rpm": "caps",
+        "sys-kernel/dracut-genpack": "transient"
+    }
+}

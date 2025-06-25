@@ -1,0 +1,4 @@
+work/
+*.img
+*.squashfs
+.vscode/
