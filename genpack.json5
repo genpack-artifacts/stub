@@ -11,8 +11,9 @@
         "sys-devel/binutils"
     ],
     "use": {
-        "app-arch/rpm": "caps",
+        "app-arch/rpm": "lua caps",
         "sys-kernel/dracut-genpack": "transient",
         "sys-kernel/gentoo-kernel": "savedconfig",
+        "sys-apps/kexec-tools": "lzma",
     }
 }
