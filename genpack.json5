@@ -17,3 +17,5 @@
         "sys-apps/kexec-tools": "lzma",
     }
 }
+// vm allocate distroname.img 8
+// vm run -d distroname.img stub-$(uname -m).squashfs
