@@ -10,6 +10,9 @@
         "dev-util/rpmbootstrap",
         "sys-devel/binutils"
     ],
+    "binpkg-exclude": [
+        "sys-kernel/gentoo-kernel"
+    ],
     "use": {
         "app-arch/rpm": "lua caps",
         "sys-kernel/dracut-genpack": "transient",
