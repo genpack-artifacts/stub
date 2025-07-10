@@ -1,7 +1,7 @@
 {
-    "name": "stub",
-    "compression":"xz",
-    "packages": [
+    name: "stub",
+    compression:"xz",
+    packages: [
         "genpack/paravirt",
         "sys-kernel/gentoo-kernel", // build from source using savedconfig
         "sys-apps/kexec-tools",
@@ -10,10 +10,10 @@
         "dev-util/rpmbootstrap",
         "sys-devel/binutils"
     ],
-    "binpkg-exclude": [
+    binpkg_excludes: [
         "sys-kernel/gentoo-kernel"
     ],
-    "use": {
+    use: {
         "app-arch/rpm": "lua caps",
         "sys-kernel/dracut-genpack": "transient",
         "sys-kernel/gentoo-kernel": "savedconfig",
