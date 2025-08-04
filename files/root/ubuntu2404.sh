@@ -42,7 +42,7 @@ echo -e 'network:\n  version: 2\n  renderer: networkd\n  ethernets:\n    eth0:\n
 [ -d /root/.ssh ] && cp -a /root/.ssh /mnt/root/
 [ -d /etc/ssh -a -d /mnt/etc/ssh ] && cp -a /etc/ssh/*_key /etc/ssh/*_key.pub /mnt/etc/ssh/
 
-echo -e 'deb http://archive.ubuntu.com/ubuntu/ noble-updates main universe\ndeb http://security.ubuntu.com/ubuntu/ noble-security universe' >> /mnt/etc/apt/sources.list
+echo -e 'deb http://archive.ubuntu.com/ubuntu/ noble-updates main universe\ndeb http://security.ubuntu.com/ubuntu/ noble-security main universe' >> /mnt/etc/apt/sources.list
 
 echo 'virtiofs' >> /mnt/etc/initramfs-tools/modules
 PATH=$PATH:/usr/sbin chroot /mnt /usr/sbin/update-initramfs -u
