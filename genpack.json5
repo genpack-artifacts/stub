@@ -1,5 +1,6 @@
 {
     name: "stub",
+    profile: "paravirt",
     compression:"xz",
     packages: [
         "genpack/paravirt",
