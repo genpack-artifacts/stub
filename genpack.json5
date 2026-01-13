@@ -18,7 +18,7 @@
         "app-arch/rpm": "lzma lua caps",
         "sys-kernel/dracut-genpack": "transient",
         "sys-kernel/gentoo-kernel": "savedconfig",
-        "sys-apps/kexec-tools": "lzma",
+        "sys-apps/kexec-tools": "lzma zstd",
     },
     "arch":{
         "aarch64": {
