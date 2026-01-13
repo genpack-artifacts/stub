@@ -49,7 +49,8 @@ def kexec_boot(root):
             logging.info("Kernel found: %s" % kernel)
             break
     if kernel is not None:
-        for candidate in ["initramfs", "initrd.img"]:
+        candidates = ["initramfs", "initrd.img"]
+        for candidate in candidates:
             path = os.path.join(root, candidate)
             if not os.path.exists(path): path = os.path.join(bootdir, candidate)
             if os.path.exists(path):
@@ -67,10 +68,15 @@ def kexec_boot(root):
                 latest = mtime
                 logging.info("Kernel found: %s" % kernel)
         if kernel is not None:
-            initramfs = os.path.join(bootdir, "initramfs-") + os.path.basename(kernel).split('-', 1)[1] + ".img"
-            if not os.path.isfile(initramfs): initramfs = os.path.join(bootdir, "initrd-") + os.path.basename(kernel).split('-', 1)[1] + ".img"
-            if not os.path.isfile(initramfs): initramfs = None
-            else: logging.info("Initramfs found: %s" % initramfs)
+            kernel_prefixremoved = os.path.basename(kernel).split('-', 1)[1]
+            candidates = ["initramfs-" + kernel_prefixremoved, "initrd.img-" + kernel_prefixremoved, "initrd-" + kernel_prefixremoved + ".img"]
+            for candidate in candidates:
+                path = os.path.join(root, candidate)
+                if not os.path.exists(path): path = os.path.join(bootdir, candidate)
+                if os.path.exists(path):
+                    initramfs = path
+                    logging.info("Initramfs found: %s" % initramfs)
+                    break
 
     if kernel is None:
         logging.info("Kernel not found")
@@ -102,7 +108,7 @@ def kexec_boot(root):
         if new_cmdline != "": new_cmdline += ' '
         new_cmdline += arg
 
-    new_cmdline += " root=" + device + " rootfstype=" + fstype
+    new_cmdline += " root=" + device + " rootfstype=" + fstype + " rd.hostonly=0"
     if not has_fstab and not has_rw: new_cmdline += " rw" # always mount root filesystem r/w when fstab is missing
     logging.debug("new cmdline=%s" % new_cmdline)
 
@@ -110,7 +116,7 @@ def kexec_boot(root):
     if initramfs is not None: kexec_cmdline.append("--initrd=" + initramfs)
     kexec_cmdline.append(kernel)
 
-    logging.debug("kexec cmdline", kexec_cmdline)
+    logging.info("kexec cmdline: " + ' '.join(kexec_cmdline))
     return subprocess.call(kexec_cmdline) == 0
 
 def configure(ini):
