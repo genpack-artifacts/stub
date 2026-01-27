@@ -14,6 +14,9 @@
     binpkg_excludes: [
         "sys-kernel/gentoo-kernel"
     ],
+    accept_keywords: {
+        "dev-util/debootstrap":null,
+    },
     use: {
         "app-arch/rpm": "lzma lua caps",
         "sys-kernel/dracut-genpack": "transient",
@@ -23,7 +26,6 @@
     "arch":{
         "aarch64": {
             "accept_keywords": {
-                "dev-util/debootstrap":null,
                 "app-emulation/qemu-guest-agent":null,
                 "app-admin/eclean-kernel": null,
                 "dev-python/pymountboot": null
