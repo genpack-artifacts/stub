@@ -69,7 +69,7 @@ def kexec_boot(root):
                 logging.info("Kernel found: %s" % kernel)
         if kernel is not None:
             kernel_prefixremoved = os.path.basename(kernel).split('-', 1)[1]
-            candidates = ["initramfs-" + kernel_prefixremoved, "initrd.img-" + kernel_prefixremoved, "initrd-" + kernel_prefixremoved + ".img"]
+            candidates = ["initramfs-" + kernel_prefixremoved + ".img", "initramfs-" + kernel_prefixremoved, "initrd.img-" + kernel_prefixremoved, "initrd-" + kernel_prefixremoved + ".img"]
             for candidate in candidates:
                 path = os.path.join(root, candidate)
                 if not os.path.exists(path): path = os.path.join(bootdir, candidate)
@@ -102,7 +102,7 @@ def kexec_boot(root):
     has_rw = False
     new_cmdline = ""
     for arg in cmdline_args:
-        if arg.startswith("root=") or arg.startswith("rootfstype="): continue
+        if arg.startswith("root=") or arg.startswith("rootfstype=") or arg.startswith("initrd="): continue
         if not has_fstab and arg == "ro": continue
         if arg == "rw": has_rw = True
         if new_cmdline != "": new_cmdline += ' '
