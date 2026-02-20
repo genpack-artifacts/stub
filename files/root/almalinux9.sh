@@ -5,7 +5,7 @@ set -e
 RELEASEVER=9
 BASE_URL=http://ftp.iij.ad.jp/pub/linux/almalinux/$RELEASEVER/BaseOS/$(uname -m)/os/
 
-if /sbin/mkfs.xfs -f -i nrext64=0 /dev/vdb; then
+if /sbin/mkfs.xfs -f -n parent=0 -i nrext64=0 /dev/vdb; then
 	mount /dev/vdb /mnt
 else
 	mount -t virtiofs fs /mnt
@@ -19,6 +19,8 @@ mount -o bind /dev /mnt/dev
 mkdir -p /mnt/etc/dracut.conf.d
 echo 'add_drivers+=" virtiofs "' > /mnt/etc/dracut.conf.d/virtiofs.conf
 
+rpmbootstrap -x /usr/libexec/platform-python --no-signature $BASE_URL /mnt "almalinux-release"
+rpm --root /mnt --import /mnt/etc/pki/rpm-gpg/RPM-GPG-KEY-*
 rpmbootstrap -x /usr/libexec/platform-python $BASE_URL /mnt "dnf"
 
 echo -e 'search local\nnameserver 8.8.8.8\nnameserver 8.8.4.4\nnameserver 2001:4860:4860::8888\nnameserver 2001:4860:4860::8844' > /mnt/etc/resolv.conf
