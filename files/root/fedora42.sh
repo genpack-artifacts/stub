@@ -34,7 +34,8 @@ rpmbootstrap -x /usr/libexec/platform-python $BASE_URL /mnt "dnf5"
 
 echo -e 'search local\nnameserver 8.8.8.8\nnameserver 8.8.4.4\nnameserver 2001:4860:4860::8888\nnameserver 2001:4860:4860::8844' > /mnt/etc/resolv.conf
 
-rm -rf /mnt/var/lib/rpm
+rm -rf /mnt/var/lib/rpm /mnt/usr/lib/sysimage/rpm
+mkdir -p /mnt/usr/lib/sysimage/rpm
 chroot /mnt rpm --initdb
 echo $RELEASEVER > /mnt/etc/dnf/vars/releasever
 chroot /mnt dnf install -y "dnf5" "passwd" "vim-minimal" "strace" "less" "kernel" "tar" "openssh-server" "openssh-clients" "NetworkManager" "iproute" "qemu-guest-agent" "grub2-common" "fedora-gpg-keys"
