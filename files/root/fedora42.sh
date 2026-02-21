@@ -38,7 +38,7 @@ rm -rf /mnt/var/lib/rpm /mnt/usr/lib/sysimage/rpm
 mkdir -p /mnt/usr/lib/sysimage/rpm
 chroot /mnt rpm --initdb
 echo $RELEASEVER > /mnt/etc/dnf/vars/releasever
-chroot /mnt dnf install -y "dnf5" "passwd" "vim-minimal" "strace" "less" "kernel" "tar" "openssh-server" "openssh-clients" "NetworkManager" "iproute" "qemu-guest-agent" "grub2-common" "fedora-gpg-keys"
+chroot /mnt dnf install -y "dnf5" "passwd" "vim-minimal" "strace" "less" "kernel" "tar" "openssh-server" "openssh-clients" "NetworkManager" "iproute" "qemu-guest-agent" "grub2-common" "fedora-gpg-keys" "glibc-langpack-ja"
 
 hostname > /mnt/etc/hostname
 mkdir -p /mnt/etc/NetworkManager/system-connections
