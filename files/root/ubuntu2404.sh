@@ -31,7 +31,7 @@ case "$(uname -m)" in
         ;;
 esac
 
-/usr/sbin/debootstrap --include="ubuntu-minimal,initramfs-tools,openssh-server,linux-generic,avahi-daemon,llmnrd,qemu-guest-agent,locales-all" --components=main,universe --arch=$ARCH noble /mnt $MIRROR
+/usr/sbin/debootstrap --include="ubuntu-minimal,initramfs-tools,openssh-server,linux-generic,avahi-daemon,llmnrd,qemu-guest-agent,locales-all,socat" --components=main,universe --arch=$ARCH noble /mnt $MIRROR
 
 sed -i 's/^\(root:\)[^:]*\(:.*\)$/\1\2/' /mnt/etc/shadow
 echo -e "$ROOTFS_DEVICE /                       $ROOTFS_TYPE     defaults        1 1" > /mnt/etc/fstab
@@ -41,6 +41,9 @@ echo -e 'network:\n  version: 2\n  renderer: networkd\n  ethernets:\n    eth0:\n
 
 [ -d /root/.ssh ] && cp -a /root/.ssh /mnt/root/
 [ -d /etc/ssh -a -d /mnt/etc/ssh ] && cp -a /etc/ssh/*_key /etc/ssh/*_key.pub /mnt/etc/ssh/
+
+cp /usr/bin/sock-forward /mnt/usr/bin/
+cp /usr/lib/systemd/system/sock-forward@.service /mnt/etc/systemd/system/
 
 echo -e 'deb http://archive.ubuntu.com/ubuntu/ noble-updates main universe\ndeb http://security.ubuntu.com/ubuntu/ noble-security main universe' >> /mnt/etc/apt/sources.list
 

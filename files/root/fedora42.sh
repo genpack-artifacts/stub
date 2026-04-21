@@ -38,7 +38,7 @@ rm -rf /mnt/var/lib/rpm /mnt/usr/lib/sysimage/rpm
 mkdir -p /mnt/usr/lib/sysimage/rpm
 chroot /mnt rpm --initdb
 echo $RELEASEVER > /mnt/etc/dnf/vars/releasever
-chroot /mnt dnf install -y "dnf5" "passwd" "vim-minimal" "strace" "less" "kernel" "tar" "openssh-server" "openssh-clients" "NetworkManager" "iproute" "qemu-guest-agent" "grub2-common" "fedora-gpg-keys" "glibc-langpack-ja"
+chroot /mnt dnf install -y "dnf5" "passwd" "vim-minimal" "strace" "less" "kernel" "tar" "openssh-server" "openssh-clients" "NetworkManager" "iproute" "qemu-guest-agent" "grub2-common" "fedora-gpg-keys" "glibc-langpack-ja" "socat"
 
 hostname > /mnt/etc/hostname
 mkdir -p /mnt/etc/NetworkManager/system-connections
@@ -71,6 +71,9 @@ echo 'LANG=ja_JP.utf8' > /mnt/etc/locale.conf
 
 [ -d /root/.ssh ] && cp -a /root/.ssh /mnt/root/
 [ -d /etc/ssh -a -d /mnt/etc/ssh ] && cp -a /etc/ssh/*_key /etc/ssh/*_key.pub /mnt/etc/ssh/
+
+cp /usr/bin/sock-forward /mnt/usr/bin/
+cp /usr/lib/systemd/system/sock-forward@.service /mnt/etc/systemd/system/
 
 chroot /mnt systemctl enable sshd systemd-resolved qemu-guest-agent
 

@@ -47,8 +47,12 @@ cp /etc/resolv.conf /mnt/etc/
 [ -f /etc/localtime ] && cp -a /etc/localtime /mnt/etc/
 [ -d /root/.ssh ] && cp -a /root/.ssh /mnt/root/
 [ -d /etc/ssh -a -d /mnt/etc/ssh ] && cp -a /etc/ssh/*_key /etc/ssh/*_key.pub /mnt/etc/ssh/
+
+cp /usr/bin/sock-forward /mnt/usr/bin/
+cp /usr/lib/systemd/system/sock-forward@.service /mnt/etc/systemd/system/
+
 echo 'sys-kernel/installkernel dracut' >> /mnt/etc/portage/package.use/kernel
-chroot /mnt env USE="-quic -http2 -http3 -curl_quic_openssl" emerge gentoo-kernel-bin
+chroot /mnt env USE="-quic -http2 -http3 -curl_quic_openssl" emerge gentoo-kernel-bin net-misc/socat
 chroot /mnt systemctl enable systemd-resolved sshd
 mv /mnt/etc/issue.logo /mnt/etc/issue
 umount /mnt/dev

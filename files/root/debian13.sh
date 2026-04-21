@@ -28,7 +28,7 @@ case "$(uname -m)" in
         ;;
 esac
 
-/usr/sbin/debootstrap --include="initramfs-tools,openssh-server,linux-image-$ARCH,dbus,systemd-resolved,qemu-guest-agent,locales-all" --components=main,universe --arch=$ARCH trixie /mnt https://linux.yz.yamagata-u.ac.jp/pub/linux/debian
+/usr/sbin/debootstrap --include="initramfs-tools,openssh-server,linux-image-$ARCH,dbus,systemd-resolved,qemu-guest-agent,locales-all,socat" --components=main,universe --arch=$ARCH trixie /mnt https://linux.yz.yamagata-u.ac.jp/pub/linux/debian
 
 sed -i 's/^\(root:\)[^:]*\(:.*\)$/\1\2/' /mnt/etc/shadow
 echo -e "$ROOTFS_DEVICE /                       $ROOTFS_TYPE     defaults        1 1" > /mnt/etc/fstab
@@ -39,6 +39,9 @@ echo 'deb http://security.debian.org/debian-security bookworm-security main' >> 
 
 [ -d /root/.ssh ] && cp -a /root/.ssh /mnt/root/
 [ -d /etc/ssh -a -d /mnt/etc/ssh ] && cp -a /etc/ssh/*_key /etc/ssh/*_key.pub /mnt/etc/ssh/
+
+cp /usr/bin/sock-forward /mnt/usr/bin/
+cp /usr/lib/systemd/system/sock-forward@.service /mnt/etc/systemd/system/
 
 chroot /mnt systemctl enable systemd-networkd systemd-resolved
 echo 'virtiofs' >> /mnt/etc/initramfs-tools/modules

@@ -28,7 +28,7 @@ echo -e 'search local\nnameserver 8.8.8.8\nnameserver 8.8.4.4\nnameserver 2001:4
 rm /mnt/var/lib/rpm/*
 chroot /mnt rpm --rebuilddb
 echo $RELEASEVER > /mnt/etc/dnf/vars/releasever
-chroot /mnt dnf install -y "dnf" "passwd" "vim-minimal" "strace" "less" "kernel" "tar" "openssh-server" "openssh-clients" "avahi" "NetworkManager" "iproute" "qemu-guest-agent" "grub2-common" "almalinux-gpg-keys"
+chroot /mnt dnf install -y "dnf" "passwd" "vim-minimal" "strace" "less" "kernel" "tar" "openssh-server" "openssh-clients" "avahi" "NetworkManager" "iproute" "qemu-guest-agent" "grub2-common" "almalinux-gpg-keys" "socat"
 
 hostname > /mnt/etc/hostname
 echo -e 'DEVICE="eth0"\nBOOTPROTO=dhcp\nONBOOT=yes\nTYPE="Ethernet"' > /mnt/etc/sysconfig/network-scripts/ifcfg-eth0
@@ -41,6 +41,9 @@ touch /mnt/etc/sysconfig/network
 
 [ -d /root/.ssh ] && cp -a /root/.ssh /mnt/root/
 [ -d /etc/ssh -a -d /mnt/etc/ssh ] && cp -a /etc/ssh/*_key /etc/ssh/*_key.pub /mnt/etc/ssh/
+
+cp /usr/bin/sock-forward /mnt/usr/bin/
+cp /usr/lib/systemd/system/sock-forward@.service /mnt/etc/systemd/system/
 
 cp -a /sbin/llmnrd /mnt/usr/sbin/
 cat <<EOF > /mnt/etc/systemd/system/llmnrd.service

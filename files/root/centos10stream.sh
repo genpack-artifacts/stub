@@ -30,6 +30,9 @@ echo 'LANG=ja_JP.utf8' > /mnt/etc/locale.conf
 [ -d /root/.ssh ] && cp -a /root/.ssh /mnt/root/
 [ -d /etc/ssh -a -d /mnt/etc/ssh ] && cp -a /etc/ssh/*_key /etc/ssh/*_key.pub /mnt/etc/ssh/
 
+cp /usr/bin/sock-forward /mnt/usr/bin/
+cp /usr/lib/systemd/system/sock-forward@.service /mnt/etc/systemd/system/
+
 cp -a /sbin/llmnrd /mnt/usr/sbin/
 cat <<EOF > /mnt/etc/systemd/system/llmnrd.service
 [Unit]
@@ -44,7 +47,7 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
-chroot /mnt dnf install -y qemu-guest-agent
+chroot /mnt dnf install -y qemu-guest-agent socat
 chroot /mnt systemctl enable sshd avahi-daemon llmnrd qemu-guest-agent
 
 umount /mnt/dev
