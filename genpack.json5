@@ -3,7 +3,6 @@
     profile: "paravirt",
     compression:"xz",
     packages: [
-        "genpack/paravirt",
         "sys-kernel/gentoo-kernel", // build from source using savedconfig
         "sys-apps/kexec-tools",
         "dev-util/debootstrap",
