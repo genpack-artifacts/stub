@@ -3,7 +3,7 @@
     profile: "paravirt",
     compression:"xz",
     packages: [
-        "sys-kernel/gentoo-kernel", // build from source using savedconfig
+        "sys-kernel/gentoo-kernel", // built from source; slimmed via kernel/config.d/unset.config (blacklist)
         "sys-apps/kexec-tools",
         "dev-util/debootstrap",
         "sys-fs/cryptsetup",
@@ -19,7 +19,6 @@
     use: {
         "app-arch/rpm": "lzma lua caps",
         "sys-kernel/dracut-genpack": "transient",
-        "sys-kernel/gentoo-kernel": "savedconfig",
         "sys-apps/kexec-tools": "lzma zstd",
     },
     "arch":{
